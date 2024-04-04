@@ -76,3 +76,46 @@ fc3bbe2097686539f741a44f17094c73ca0c2f6bbca6953598c01f86a1a5543f
 ## but the files are still not there
 
 
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker volume --help
+
+Usage:  docker volume COMMAND
+
+Manage volumes
+
+Commands:
+  create      Create a volume
+  inspect     Display detailed information on one or more volumes
+  ls          List volumes
+  prune       Remove unused local volumes
+  rm          Remove one or more volumes
+
+Run 'docker volume COMMAND --help' for more information on a command.
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker volume ls
+DRIVER    VOLUME NAME
+local     c9c9cc08c12e06e652ff929b6dc80e72d5cf7ad64325e7bf952dcc8cd723b14a
+
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker volume ls
+DRIVER    VOLUME NAME
+
+## We can see here that our ANONYMOUS VOLUME is gone.
+## So we need the NAMES VOLUME, which can't be created in Dockerfile
+
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker stop feedback-app
+Error response from daemon: No such container: feedback-app
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker rmi feedback-node:volumes
+Untagged: feedback-node:volumes
+Deleted: sha256:4452f6e2c41486cdd0aecfbcdb2c2f5743b819ed44584e72ded938ee5928377d
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker build -t feedback-node:volumes .
+[+] Building 2.2s (10/10) FINISHED
+...
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker run -p 3000:80 -d --rm --name feedback-app -v feedback:/app/feedback feedback-node:volumes
+c9450abc91bba11bb108e5f9959b6a46b45eff0bb00811c48712456a29be20e4
+
+## now the volume exists even after the container is removed!
+
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker stop feedback-app
+
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker volume ls
+DRIVER    VOLUME NAME
+local     feedback
+
