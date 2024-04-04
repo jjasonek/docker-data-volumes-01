@@ -52,3 +52,27 @@ PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-se
 (node:1) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 4)
 
 ## The error says: Error: EXDEV: cross-device link not permitted, rename '/app/temp/awesome.txt' -> '/app/feedback/awesome.txt'
+
+
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker stop feedback-app
+feedback-app
+
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker rmi feedback-node:volumes
+Untagged: feedback-node:volumes
+Deleted: sha256:f9e22d3b261b740b027f475cb9ca1a095557d3cf87907757ff65854af871f670
+
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker build -t feedback-node:volumes .
+
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker run -p 3000:80 -d --rm --name feedback-app feedback-node:volumes
+bffe22bc66594cafeaebded9e8726f19dbba8f758079462191ea1765e11d71a0
+
+
+## try to restart
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker stop feedback-app
+feedback-app
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker run -p 3000:80 -d --rm --name feedback-app feedback-node:volumes
+fc3bbe2097686539f741a44f17094c73ca0c2f6bbca6953598c01f86a1a5543f
+
+## but the files are still not there
+
+
