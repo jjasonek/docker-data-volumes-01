@@ -17,3 +17,9 @@ CONTAINER ID   IMAGE           COMMAND                  CREATED          STATUS 
 
 ## Then we can see http://localhost:3000
 ## And after posting some input we have a file for example: http://localhost:3000/feedback/awesome.txt
+
+## If the container is not deleted, files are still in it.
+## Because the file system is inside the container. And data is not deleted until container is removed
+## (or re-built because of code change).
+
+
