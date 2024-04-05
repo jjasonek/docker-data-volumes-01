@@ -119,3 +119,39 @@ PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-se
 DRIVER    VOLUME NAME
 local     feedback
 
+
+## ADDING BIND MOUNT (NOT SUCCESSFUL YET)
+
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker run -p 3000:80 -d --rm --name feedback-app -v feedback:/app/feedback -v "C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup:/app" feedback-node:volumes
+1ac9e608e220081ae26e58c7c591d727869f5100078b8c9bb83be765a825de16
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+## Start without --rm to be able to see the logs
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker run -p 3000:80 -d --name feedback-app -v feedback:/app/feedback -v "C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup:/app" feedback-node:volumes
+7314f5d85d84fc5d27f4bb0b88c734b83fb2dc221d560432cc37d210b88da051
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker ps -a
+CONTAINER ID   IMAGE                   COMMAND                  CREATED         STATUS                     PORTS     NAMES
+7314f5d85d84   feedback-node:volumes   "docker-entrypoint.s…"   6 seconds ago   Exited (1) 4 seconds ago             feedback-app
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker logs feedback-app
+internal/modules/cjs/loader.js:934
+  throw err;
+  ^
+
+Error: Cannot find module 'express'
+Require stack:
+- /app/server.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:931:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:774:27)
+    at Module.require (internal/modules/cjs/loader.js:1003:19)
+    at require (internal/modules/cjs/helpers.js:107:18)
+    at Object.<anonymous> (/app/server.js:5:17)
+    at Module._compile (internal/modules/cjs/loader.js:1114:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1143:10)
+    at Module.load (internal/modules/cjs/loader.js:979:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:819:12)
+    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [ '/app/server.js' ]
+}
+
