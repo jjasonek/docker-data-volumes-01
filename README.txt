@@ -155,3 +155,13 @@ Require stack:
   requireStack: [ '/app/server.js' ]
 }
 
+## the problem here is that Docker overwrites container /app with content from local host's /app
+## including generated /node_volumes
+## To solve the problem we add another ANONYMOUS volume: -v /app/node_modules
+## Or we can do it also in the Dockerfile: VOLUME [ "/app/node_modules" ]
+## In this case LONGER internal path wins so this approach works as kind of exclusion
+
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker rm feedback-app
+feedback-app
+PS C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup> docker run -p 3000:80 -d --name feedback-app -v feedback:/app/feedback -v "C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup:/app" -v /app/node_modules feedback-node:volumes
+2e0d5d7222f4b096fc0b9e8a92fcf61faa6f20b2c48f5e98df240eebf79b98e9
