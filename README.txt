@@ -1,3 +1,5 @@
+## before starting container create folders "feedback" and "temp"
+
 docker build -t feedback-node .
 [+] Building 16.2s (10/10) FINISHED                                                                                                                                                                                  docker:default
  ...
@@ -165,3 +167,32 @@ docker rm feedback-app
 feedback-app
 docker run -p 3000:80 -d --name feedback-app -v feedback:/app/feedback -v "C:\Training\Docker\data-volumes-01-starting-setup\data-volumes-01-starting-setup:/app" -v /app/node_modules feedback-node:volumes
 2e0d5d7222f4b096fc0b9e8a92fcf61faa6f20b2c48f5e98df240eebf79b98e9
+
+## the same on Linux:
+docker run -p 3000:80 -d --name feedback-app -v feedback:/app/feedback -v $(pwd):/app -v /app/node_modules feed
+back-node:volumes
+
+## for the change in server.js we need to restart the server. Don't need to rebuild the image.
+## but we can use package allowing node.js to watch changes and restart the server when there is a change in a code.
+## devDependencies.nodemon
+## And after using this nodemon in the "start" script we can change the server.js code during run of the container.
+
+$ docker build -t feedback-node:volumes .
+
+$ docker run -p 3000:80 -d --rm --name feedback-app -v feedback:/app/feedback -v /home/jjasonek/Training/Docker/docker-data-volumes-01/data-volumes-01-starting-setup:/app -v /app/node_modules feedback-node:volumes
+6602dc8f4418f11fe2235276224f4bfe5c703a7f580dbd1541b9f23cc1c0cb4b
+$ docker logs feedback-app
+
+> data-volume-example@1.0.0 start /app
+> nodemon server.js
+
+[nodemon] 3.1.0
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,cjs,json
+[nodemon] starting `node server.js`
+TEST
+[nodemon] restarting due to changes...
+[nodemon] starting `node server.js`
+TEST!!!!
+
