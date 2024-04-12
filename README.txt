@@ -224,3 +224,13 @@ $ docker run -p 3000:8000 --env PORT=8000 -d --rm --name feedback-app -v feedbac
 
 ## samu using ENV variable from a file
 $ docker run -p 3000:8000 --env-file ./.env -d --rm --name feedback-app -v feedback:/app/feedback -v $(pwd):/app:ro -v /app/node_modules -v /app/temp feedback-node:env
+
+
+## build image with build time ARGument
+
+## using default value given in dockerfile
+$ docker build -t feedback-node:web-app .
+
+## overriding the default value
+$ docker build -t feedback-node:dev --build-arg DEFAULT_PORT=8000 .
+$ docker run -p 3000:8000 -d --rm --name feedback-app -v feedback:/app/feedback -v $(pwd):/app:ro -v /app/node_modules -v /app/temp feedback-node:dev
