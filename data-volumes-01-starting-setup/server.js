@@ -45,4 +45,6 @@ app.post('/create', async (req, res) => {
   });
 });
 
-app.listen(80);
+// I think, in java, we would use properties instead of process
+// which is node.js stuff.
+app.listen(process.env.PORT);

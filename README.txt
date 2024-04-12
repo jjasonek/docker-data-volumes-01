@@ -217,3 +217,7 @@ TEST!!!!
 [nodemon] restarting due to changes...
 [nodemon] starting `node server.js`
 TEST
+
+## run container using custom internal port number 8000
+$ docker stop feedback-app
+$ docker run -p 3000:8000 --env PORT=8000 -d --rm --name feedback-app -v feedback:/app/feedback -v $(pwd):/app:ro -v /app/node_modules -v /app/temp feedback-node:env
