@@ -196,3 +196,24 @@ TEST
 [nodemon] starting `node server.js`
 TEST!!!!
 
+## read only option for files inside the container.
+## this is not needed, but it gives us extra clarity and ensuring that files inside the container won't be changed accidentally.
+
+$ docker run -p 3000:80 -d --rm --name feedback-app -v feedback:/app/feedback -v $(pwd):/app:ro -v /app/node_modules -v /app/temp feedback-node:volumes
+
+...
+
+$ docker logs feedback-app
+
+> data-volume-example@1.0.0 start /app
+> nodemon server.js
+
+[nodemon] 3.1.0
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,cjs,json
+[nodemon] starting `node server.js`
+TEST!!!!
+[nodemon] restarting due to changes...
+[nodemon] starting `node server.js`
+TEST
