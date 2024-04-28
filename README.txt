@@ -222,7 +222,7 @@ TEST
 $ docker stop feedback-app
 $ docker run -p 3000:8000 --env PORT=8000 -d --rm --name feedback-app -v feedback:/app/feedback -v $(pwd):/app:ro -v /app/node_modules -v /app/temp feedback-node:env
 
-## samu using ENV variable from a file
+## same using ENV variable from a file
 $ docker run -p 3000:8000 --env-file ./.env -d --rm --name feedback-app -v feedback:/app/feedback -v $(pwd):/app:ro -v /app/node_modules -v /app/temp feedback-node:env
 
 
